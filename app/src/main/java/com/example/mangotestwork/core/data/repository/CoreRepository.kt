@@ -11,7 +11,6 @@ import retrofit2.Response
 
 class CoreRepository(private val coreService: CoreService) {
 
-
     suspend fun updateProfile(
         name: String,
         city: String,

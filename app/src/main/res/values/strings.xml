@@ -5,4 +5,8 @@
     <string name="code_confirmation">Код подтверждения</string>
     <string name="enter">Войти</string>
     <string name="code_send">Отправить код</string>
+    <string name="register">Регистрация</string>
+    <string name="name">Имя</string>
+    <string name="user_name">Username</string>
+    <string name="confirm_register">Зарегистрироваться</string>
 </resources>

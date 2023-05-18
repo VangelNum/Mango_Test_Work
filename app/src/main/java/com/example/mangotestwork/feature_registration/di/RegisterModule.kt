@@ -1,11 +1,8 @@
 package com.example.mangotestwork.feature_registration.di
 
 import com.example.mangotestwork.core.common.Constants.BASE_URL
-import com.example.mangotestwork.core.data.api.CoreService
 import com.example.mangotestwork.feature_registration.data.api.RegisterService
 import com.example.mangotestwork.feature_registration.data.repository.RegisterRepository
-import com.example.mangotestwork.feauture_authorization.data.api.AuthService
-import com.example.mangotestwork.feauture_authorization.data.repository.AuthRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,7 +28,7 @@ object RegisterModule {
 
     @Provides
     @Singleton
-    fun provideRegisterRepository(registerService: RegisterService) : RegisterRepository {
+    fun provideRegisterRepository(registerService: RegisterService): RegisterRepository {
         return RegisterRepository(registerService)
     }
 

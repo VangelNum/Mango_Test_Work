@@ -37,7 +37,8 @@ object AuthModule {
 
                 // Если требуется авторизация, добавляем заголовок
                 val modifiedRequest = if (requiresAuthorization) {
-                    val accessToken = context.getSharedPreferences("access_token",Context.MODE_PRIVATE)
+                    val accessToken =
+                        context.getSharedPreferences("access_token", Context.MODE_PRIVATE)
                     val authHeader = "Bearer $accessToken"
                     originalRequest.newBuilder()
                         .header("Authorization", authHeader)

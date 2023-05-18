@@ -35,9 +35,11 @@ fun ProfileScreen(profileViewModel: ProfileViewModel) {
                     Text("Знак зодиака: ${userProfile.zodiac}")
                     Text("О себе: ${userProfile.about}")
                 }
+
                 ProfileState.Error -> {
                     Text("Ошибка при загрузке профиля")
                 }
+
                 else -> {
                     Text("Профиль не загружен")
                 }

@@ -14,7 +14,7 @@ import javax.inject.Inject
 class ProfileViewModel @Inject constructor(
     private val repository: CoreRepository
 ) : ViewModel() {
-    private val _loadingState = MutableStateFlow<Boolean>(false)
+    private val _loadingState = MutableStateFlow(false)
     val loadingState: StateFlow<Boolean> = _loadingState
 
     private val _profileState = MutableStateFlow<ProfileState?>(null)

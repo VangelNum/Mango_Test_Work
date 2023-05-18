@@ -8,9 +8,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.mangotestwork.core.presentation.Screens
 import com.example.mangotestwork.feature_edit_profile.presentation.EditProfileScreen
 import com.example.mangotestwork.feature_edit_profile.presentation.EditProfileViewModel
@@ -42,12 +44,27 @@ class MainActivity : ComponentActivity() {
                             val viewModel: AuthViewModel = hiltViewModel()
                             AuthScreen(
                                 viewModel,
-                                { navController.navigate(Screens.Registration.route) },
+                                navigateToRegistrationScreen = { arg ->
+                                    navController.navigate(Screens.Registration.route + "/$arg")
+                                },
                                 { navController.navigate(Screens.Profile.route) })
                         }
-                        composable(Screens.Registration.route) {
+                        composable(
+                            Screens.Registration.route + "/{phoneNumber}",
+                            arguments = listOf(navArgument("phoneNumber") {
+                                type = NavType.StringType
+                            })
+                        ) { backStackEntry ->
                             val viewModel: RegistrationViewModel = hiltViewModel()
-                            RegistrationScreen(viewModel, "zero")
+                            RegistrationScreen(
+                                viewModel,
+                                backStackEntry.arguments?.getString("phoneNumber"),
+                                navigateToProfile = {
+                                    navController.navigate(Screens.Profile.route) {
+                                        popUpTo(Screens.Profile.route)
+                                    }
+                                }
+                            )
                         }
                         composable(Screens.Profile.route) {
                             val viewModel: ProfileViewModel = hiltViewModel()
