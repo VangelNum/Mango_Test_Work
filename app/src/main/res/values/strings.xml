@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Mango Test work</string>
+    <string name="auth">Авторизация</string>
+    <string name="phone_number">Номер телефона</string>
+    <string name="code_confirmation">Код подтверждения</string>
+    <string name="enter">Войти</string>
+    <string name="code_send">Отправить код</string>
+</resources>
