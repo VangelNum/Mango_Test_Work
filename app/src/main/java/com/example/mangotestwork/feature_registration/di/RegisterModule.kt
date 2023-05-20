@@ -1,15 +1,12 @@
 package com.example.mangotestwork.feature_registration.di
 
-import com.example.mangotestwork.core.common.Constants.BASE_URL
 import com.example.mangotestwork.feature_registration.data.api.RegisterService
 import com.example.mangotestwork.feature_registration.data.repository.RegisterRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
@@ -17,12 +14,7 @@ import javax.inject.Singleton
 object RegisterModule {
     @Provides
     @Singleton
-    fun provideRegisterService(client: OkHttpClient): RegisterService {
-        val retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .client(client)
-            .build()
+    fun provideRegisterService(retrofit: Retrofit): RegisterService {
         return retrofit.create(RegisterService::class.java)
     }
 

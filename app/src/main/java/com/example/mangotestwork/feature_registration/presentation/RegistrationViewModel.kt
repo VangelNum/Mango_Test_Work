@@ -1,5 +1,8 @@
 package com.example.mangotestwork.feature_registration.presentation
 
+import android.content.Context
+import android.content.SharedPreferences
+import android.preference.PreferenceManager
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,7 +21,7 @@ class RegistrationViewModel @Inject constructor(
     private val _registerState = MutableStateFlow<RegisterState>(RegisterState.Idle)
     val registerState: StateFlow<RegisterState> = _registerState.asStateFlow()
 
-    fun registerUser(phone: String, name: String, username: String) {
+    fun registerUser(phone: String, name: String, username: String, context: Context) {
         viewModelScope.launch {
             _registerState.value = RegisterState.Loading
             try {
@@ -26,17 +29,26 @@ class RegistrationViewModel @Inject constructor(
                 if (response.isSuccessful) {
                     val registerUserResponse = response.body()
                     if (registerUserResponse != null) {
+                        val refreshToken = registerUserResponse.refreshToken
+                        val accessToken = registerUserResponse.accessToken.toString()
+                        val userId = registerUserResponse.userId
+
+                        val sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+                        val editor = sharedPreferences.edit()
+                        editor.putString("refreshToken", refreshToken)
+                        editor.putString("accessToken", accessToken)
+                        editor.apply()
+
                         _registerState.value = RegisterState.Success(
-                            refreshToken = registerUserResponse.refreshToken,
-                            accessToken = registerUserResponse.accessToken.toString(),
-                            userId = registerUserResponse.userId
+                            refreshToken = refreshToken,
+                            accessToken = accessToken,
+                            userId = userId
                         )
                     }
                 } else {
                     _registerState.value = RegisterState.Error(response.message().toString())
                 }
             } catch (e: Exception) {
-                Log.d("tag", "exception: ${e.message.toString()}")
                 _registerState.value = RegisterState.Error(e.message.toString())
             }
         }

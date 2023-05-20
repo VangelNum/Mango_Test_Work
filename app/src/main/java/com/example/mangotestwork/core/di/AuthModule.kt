@@ -1,6 +1,7 @@
 package com.example.mangotestwork.core.di
 
 import android.content.Context
+import com.example.mangotestwork.core.common.Constants.BASE_URL
 import com.example.mangotestwork.core.data.api.CoreService
 import com.example.mangotestwork.core.data.repository.CoreRepository
 import dagger.Module
@@ -37,8 +38,8 @@ object AuthModule {
 
                 // Если требуется авторизация, добавляем заголовок
                 val modifiedRequest = if (requiresAuthorization) {
-                    val accessToken =
-                        context.getSharedPreferences("access_token", Context.MODE_PRIVATE)
+                    val sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+                    val accessToken = sharedPreferences.getString("accessToken", null)
                     val authHeader = "Bearer $accessToken"
                     originalRequest.newBuilder()
                         .header("Authorization", authHeader)
@@ -53,12 +54,17 @@ object AuthModule {
 
     @Provides
     @Singleton
-    fun provideAuthService(client: OkHttpClient): CoreService {
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://plannerok.ru/")
+    fun provideAuthService(client: OkHttpClient): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideCoreService(retrofit: Retrofit): CoreService {
         return retrofit.create(CoreService::class.java)
     }
 

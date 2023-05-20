@@ -96,13 +96,14 @@ fun AuthScreen(
             )
             Spacer(modifier = Modifier.height(16.dp))
         }
+        val context = LocalContext.current
         OutlinedButton(
             onClick = {
                 if (authState == AuthState.CodeSent) {
-                    authViewModel.checkAuthCode(phoneState.value, codeState.value)
+                    authViewModel.checkAuthCode(getFullPhoneNumber(), codeState.value, context)
                 } else {
                     if (!isPhoneNumber()) {
-                        authViewModel.sendAuthCode(phoneState.value)
+                        authViewModel.sendAuthCode(getFullPhoneNumber())
                     }
                 }
             },

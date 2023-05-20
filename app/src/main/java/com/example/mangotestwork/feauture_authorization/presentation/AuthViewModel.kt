@@ -1,5 +1,7 @@
 package com.example.mangotestwork.feauture_authorization.presentation
 
+import android.content.Context
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mangotestwork.feauture_authorization.data.repository.AuthRepository
@@ -29,7 +31,7 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    fun checkAuthCode(phone: String, code: String) {
+    fun checkAuthCode(phone: String, code: String, context: Context) {
         viewModelScope.launch {
             _authState.value = AuthState.Loading
             try {
@@ -41,6 +43,13 @@ class AuthViewModel @Inject constructor(
                         val accessToken = responseBody.accessToken
                         val userId = responseBody.userId
                         val isUserExists = responseBody.userExists
+
+                        val sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+                        val editor = sharedPreferences.edit()
+                        editor.putString("refreshToken", refreshToken)
+                        editor.putString("accessToken", accessToken)
+                        editor.apply()
+                        Log.d("tag","authState: ${isUserExists.toString()}")
                         if (isUserExists) {
                             _authState.value = AuthState.Authenticated(accessToken, userId)
                         } else {

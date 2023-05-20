@@ -2,33 +2,34 @@ package com.example.mangotestwork.feature_profile.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mangotestwork.core.data.model.UserProfileResponse
 import com.example.mangotestwork.core.data.repository.CoreRepository
+import com.example.mangotestwork.feature_profile.data.repository.ProfileRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val repository: CoreRepository
+    private val repository: ProfileRepository
 ) : ViewModel() {
-    private val _loadingState = MutableStateFlow(false)
-    val loadingState: StateFlow<Boolean> = _loadingState
+    private val _profileState = MutableStateFlow<ProfileState>(ProfileState.Loading)
+    val profileState: StateFlow<ProfileState> = _profileState.asStateFlow()
 
-    private val _profileState = MutableStateFlow<ProfileState?>(null)
-    val profileState: StateFlow<ProfileState?> = _profileState
+    init {
+        getUserProfile()
+    }
 
-    fun getUserProfile() {
+    private fun getUserProfile() {
         viewModelScope.launch {
-            _loadingState.value = true
             val response = repository.getUserProfile()
-            _loadingState.value = false
-
             if (response.isSuccessful) {
                 val userProfileResponse = response.body()
-                _profileState.value = userProfileResponse?.let { ProfileState.Success(it) }
+                userProfileResponse?.let {
+                    _profileState.value = ProfileState.Success(userProfileResponse)
+                }
             } else {
                 _profileState.value = ProfileState.Error
             }
@@ -36,7 +37,3 @@ class ProfileViewModel @Inject constructor(
     }
 }
 
-sealed class ProfileState {
-    data class Success(val userProfile: UserProfileResponse) : ProfileState()
-    object Error : ProfileState()
-}

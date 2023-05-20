@@ -37,6 +37,7 @@ fun RegistrationScreen(
 ) {
     val nameState = remember { mutableStateOf("") }
     val usernameState = remember { mutableStateOf("") }
+    val context = LocalContext.current
     val registerState by registrationViewModel.registerState.collectAsState()
 
     Column(
@@ -62,7 +63,12 @@ fun RegistrationScreen(
 
         OutlinedTextField(
             value = usernameState.value,
-            onValueChange = { usernameState.value = it },
+            onValueChange = { newValue->
+                // Проверка на допустимые символы
+                if (newValue.matches(Regex("[A-Za-z0-9\\-_]*"))) {
+                    usernameState.value = newValue
+                }
+            },
             label = { Text(stringResource(id = R.string.user_name)) },
             modifier = Modifier
                 .fillMaxWidth()
@@ -76,7 +82,8 @@ fun RegistrationScreen(
                     registrationViewModel.registerUser(
                         phoneNumber,
                         nameState.value,
-                        usernameState.value
+                        usernameState.value,
+                        context
                     )
                 }
             },
