@@ -5,15 +5,22 @@ import com.example.mangotestwork.feauture_authorization.data.model.CheckAuthCode
 import com.example.mangotestwork.feauture_authorization.data.model.CheckAuthCodeResponse
 import com.example.mangotestwork.feauture_authorization.data.model.SendAuthCodeRequest
 import com.example.mangotestwork.feauture_authorization.data.model.SendAuthCodeResponse
+import com.example.mangotestwork.feauture_authorization.domain.repository.AuthRepository
 import retrofit2.Response
+import javax.inject.Inject
 
-class AuthRepository(private val authService: AuthService) {
-    suspend fun sendAuthCode(phone: String): Response<SendAuthCodeResponse> {
+class AuthRepositoryImpl @Inject constructor(
+    private val authService: AuthService
+) : AuthRepository {
+    override suspend fun sendAuthCode(phone: String): Response<SendAuthCodeResponse> {
         val request = SendAuthCodeRequest(phone)
         return authService.sendAuthCode(request)
     }
 
-    suspend fun checkAuthCode(phone: String, code: String): Response<CheckAuthCodeResponse> {
+    override suspend fun checkAuthCode(
+        phone: String,
+        code: String
+    ): Response<CheckAuthCodeResponse> {
         val request = CheckAuthCodeRequest(phone, code)
         return authService.checkAuthCode(request)
     }

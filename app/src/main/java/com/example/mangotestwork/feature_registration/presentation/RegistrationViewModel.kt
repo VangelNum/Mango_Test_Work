@@ -1,12 +1,10 @@
 package com.example.mangotestwork.feature_registration.presentation
 
 import android.content.Context
-import android.content.SharedPreferences
-import android.preference.PreferenceManager
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mangotestwork.feature_registration.data.repository.RegisterRepository
+import com.example.mangotestwork.feature_registration.data.repository.RegisterRepositoryImpl
+import com.example.mangotestwork.feature_registration.domain.repository.RegisterRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

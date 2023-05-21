@@ -1,10 +1,9 @@
 package com.example.mangotestwork.feauture_authorization.presentation
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mangotestwork.feauture_authorization.data.repository.AuthRepository
+import com.example.mangotestwork.feauture_authorization.domain.repository.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -44,12 +43,12 @@ class AuthViewModel @Inject constructor(
                         val userId = responseBody.userId
                         val isUserExists = responseBody.userExists
 
-                        val sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+                        val sharedPreferences =
+                            context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
                         val editor = sharedPreferences.edit()
                         editor.putString("refreshToken", refreshToken)
                         editor.putString("accessToken", accessToken)
                         editor.apply()
-                        Log.d("tag","authState: ${isUserExists.toString()}")
                         if (isUserExists) {
                             _authState.value = AuthState.Authenticated(accessToken, userId)
                         } else {

@@ -101,4 +101,16 @@ dependencies {
     //country codes
     implementation("com.github.togisoft:jetpack_compose_country_code_picker:1.1.4")
 
+    //room
+    val room_version = "2.5.1"
+    implementation("androidx.room:room-runtime:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")
+    implementation("androidx.room:room-ktx:$room_version")
+//    implementation ("androidx.room:room-runtime:2.5.1")
+//    implementation ("androidx.room:room-ktx:2.5.1")
+//    implementation ("androidx.compose.runtime:runtime-livedata:$compose_version")
+//    annotationProcessor ("androidx.room:room-compiler:2.5.1")
+//    kapt ("androidx.room:room-compiler:2.5.1")
+
 }

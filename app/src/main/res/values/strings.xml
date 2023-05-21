@@ -10,4 +10,6 @@
     <string name="user_name">Username</string>
     <string name="confirm_register">Зарегистрироваться</string>
     <string name="error_loading_profile">Ошибка при загрузке профиля</string>
+    <string name="avatar">Ваша фотография</string>
+    <string name="edit_profile">Редактировать профиль</string>
 </resources>

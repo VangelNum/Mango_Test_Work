@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     NavHost(
                         navController = navController,
-                        startDestination = Screens.Login.route
+                        startDestination = Screens.Profile.route
                     ) {
                         composable(Screens.Login.route) {
                             val viewModel: AuthViewModel = hiltViewModel()
@@ -68,7 +68,7 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(Screens.Profile.route) {
                             val viewModel: ProfileViewModel = hiltViewModel()
-                            ProfileScreen(viewModel)
+                            ProfileScreen(viewModel) { navController.navigate(Screens.EditProfile.route) }
                         }
                         composable(Screens.EditProfile.route) {
                             val viewModel: EditProfileViewModel = hiltViewModel()

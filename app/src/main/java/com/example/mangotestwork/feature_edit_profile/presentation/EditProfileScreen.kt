@@ -1,19 +1,30 @@
 package com.example.mangotestwork.feature_edit_profile.presentation
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.TextFieldValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import coil.compose.rememberImagePainter
+import com.example.mangotestwork.feature_profile.presentation.ProfileState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EditProfileScreen(editProfileViewModel: EditProfileViewModel) {
 
-//    val user = editProfileViewModel.us.collectAsState().value
-//    val name = remember { mutableStateOf(TextFieldValue(user?.name ?: "")) }
+      val user = editProfileViewModel.editProfileState.collectAsStateWithLifecycle()
+//    val userProfile = (user as EditProfileState.Success)
+//    val name = remember { mutableStateOf(TextFieldValue(user?. ?: "")) }
 //    val city = remember { mutableStateOf(TextFieldValue(user?.city ?: "")) }
 //    val dateOfBirth = remember { mutableStateOf(TextFieldValue(user?.dateOfBirth ?: "")) }
 //    val about = remember { mutableStateOf(TextFieldValue(user?.about ?: "")) }
-//    val loading by editProfileViewModel.loading.collectAsState()
-//    val error by editProfileViewModel.error.collectAsState()
+//
 //
 //    Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
 //        user?.let { userProfile ->
@@ -74,7 +85,7 @@ fun EditProfileScreen(editProfileViewModel: EditProfileViewModel) {
 //            Toast.makeText(ContextAmbient.current, error, Toast.LENGTH_SHORT).show()
 //        }
 //    }
-
+//
 //    val nameState = remember { mutableStateOf(TextFieldValue()) }
 //    val cityState = remember { mutableStateOf(TextFieldValue()) }
 //    val dateOfBirthState = remember { mutableStateOf(TextFieldValue()) }

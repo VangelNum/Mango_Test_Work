@@ -131,7 +131,6 @@ fun AuthScreen(
             }
 
             is AuthState.Error -> {
-                val context = LocalContext.current
                 LaunchedEffect(key1 = (authState as AuthState.Error).message) {
                     Toast.makeText(
                         context,
