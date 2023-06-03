@@ -1,8 +1,6 @@
 package com.example.mangotestwork.feature_profile.di
 
-import com.example.mangotestwork.core.data.network.CacheProfileDao
 import com.example.mangotestwork.feature_profile.data.api.ProfileService
-import com.example.mangotestwork.feature_profile.data.repository.ProfileRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

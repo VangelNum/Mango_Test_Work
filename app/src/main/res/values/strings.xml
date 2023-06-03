@@ -12,4 +12,14 @@
     <string name="error_loading_profile">Ошибка при загрузке профиля</string>
     <string name="avatar">Ваша фотография</string>
     <string name="edit_profile">Редактировать профиль</string>
+    <string name="city">City</string>
+    <string name="birthday">Birthday</string>
+    <string name="vk">Vk</string>
+    <string name="instagram">Instagram</string>
+    <string name="save_profile_changes">Сохранить изменения</string>
+    <string name="user_name_can_be_with">UserName может содержать:</string>
+    <string name="only_lat_AZ">Заглавные латинские буквы: от A до Z</string>
+    <string name="only_lat_az">Строчные латинские буквы: от a до z</string>
+    <string name="only_numbers09">Цифры от 0 до 9</string>
+    <string name="only_symbols">Символы: -_</string>
 </resources>

@@ -1,11 +1,9 @@
-package com.example.mangotestwork.core.di
+package com.example.mangotestwork.feature_cache_profile.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.mangotestwork.core.data.network.CacheProfileDB
-import com.example.mangotestwork.core.data.network.CacheProfileDao
-import com.example.mangotestwork.core.data.repository.CacheProfileRepositoryImpl
-import com.example.mangotestwork.core.domain.repository.CacheProfileRepository
+import com.example.mangotestwork.feature_cache_profile.data.network.CacheProfileDB
+import com.example.mangotestwork.feature_cache_profile.data.network.CacheProfileDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

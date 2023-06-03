@@ -43,8 +43,7 @@ class AuthViewModel @Inject constructor(
                         val userId = responseBody.userId
                         val isUserExists = responseBody.userExists
 
-                        val sharedPreferences =
-                            context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+                        val sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
                         val editor = sharedPreferences.edit()
                         editor.putString("refreshToken", refreshToken)
                         editor.putString("accessToken", accessToken)

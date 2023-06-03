@@ -1,13 +1,16 @@
 package com.example.mangotestwork.feature_edit_profile.data.model
 
-import com.example.mangotestwork.feature_profile.data.model.AvatarData
-
 data class UpdateProfileRequest(
-    val name: String,
-    val city: String,
-    val birthday: String,
-    val about: String,
-    val avatar: AvatarData
+    val name: String? = null,
+    val username: String? = null,
+    val birthday: String? = null,
+    val city: String? = null,
+    val vk: String? = null,
+    val instagram: String? = null,
+    val status: String? = null,
+    val avatar: AvatarData? = null
 )
 
-data class UpdateProfileResponse(val success: Boolean)
+data class AvatarData(val filename: String? = null, val base_64: String? = null)
+data class UpdateProfileResponse(val avatars: Avatars)
+data class Avatars(val avatar: String, val bigAvatar: String, val miniAvatar: String)

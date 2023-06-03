@@ -1,7 +1,7 @@
-package com.example.mangotestwork.core.di
+package com.example.mangotestwork.feature_cache_profile.di
 
-import com.example.mangotestwork.core.data.repository.CacheProfileRepositoryImpl
-import com.example.mangotestwork.core.domain.repository.CacheProfileRepository
+import com.example.mangotestwork.feature_cache_profile.data.repository.CacheProfileRepositoryImpl
+import com.example.mangotestwork.feature_cache_profile.domain.repository.CacheProfileRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
