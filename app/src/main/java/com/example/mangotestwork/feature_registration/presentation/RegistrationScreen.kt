@@ -1,16 +1,17 @@
 package com.example.mangotestwork.feature_registration.presentation
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -25,8 +26,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mangotestwork.R
+import com.example.mangotestwork.core.presentation.Screens
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegistrationScreen(
     registerState: RegisterState,
@@ -78,8 +79,9 @@ fun RegistrationScreen(
                     )
                 }
             },
+            shape = MaterialTheme.shapes.small,
             modifier = Modifier
-                .padding(start = 16.dp, end = 16.dp)
+                .fillMaxWidth().height(60.dp).padding(start = 16.dp, end = 16.dp)
         ) {
             Text(stringResource(id = R.string.confirm_register))
         }
@@ -109,6 +111,8 @@ fun RegistrationScreen(
             RegisterState.Idle -> Unit
             is RegisterState.Success -> {
                 LaunchedEffect(key1 = Unit) {
+                    val sharedPreferences: SharedPreferences = context.getSharedPreferences("startRoute", Context.MODE_PRIVATE)
+                    sharedPreferences.edit().putString("route", Screens.Profile.route).apply()
                     navigateToProfile()
                 }
             }

@@ -41,4 +41,8 @@ class CacheProfileRepositoryImpl @Inject constructor(
         cacheProfileDao.updateUserProfile(id, name, username, birthday, city, vk, instagram)
     }
 
+    override suspend fun deleteCacheProfileData() {
+        cacheProfileDao.deleteUserProfile()
+    }
+
 }

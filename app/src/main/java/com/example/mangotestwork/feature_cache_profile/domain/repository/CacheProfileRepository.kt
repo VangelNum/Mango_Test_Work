@@ -16,4 +16,5 @@ interface CacheProfileRepository {
         vk: String?,
         instagram: String?
     )
+    suspend fun deleteCacheProfileData()
 }

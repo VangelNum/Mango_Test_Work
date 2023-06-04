@@ -31,5 +31,6 @@ interface CacheProfileDao {
         instagram: String?
     )
 
-
+    @Query("DELETE FROM user_profile")
+    suspend fun deleteUserProfile()
 }

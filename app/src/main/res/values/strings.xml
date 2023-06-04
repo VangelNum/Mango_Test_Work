@@ -6,8 +6,8 @@
     <string name="enter">Войти</string>
     <string name="code_send">Отправить код</string>
     <string name="register">Регистрация</string>
-    <string name="name">Имя</string>
-    <string name="user_name">Username</string>
+    <string name="name">Name</string>
+    <string name="user_name">UserName</string>
     <string name="confirm_register">Зарегистрироваться</string>
     <string name="error_loading_profile">Ошибка при загрузке профиля</string>
     <string name="avatar">Ваша фотография</string>
@@ -22,4 +22,7 @@
     <string name="only_lat_az">Строчные латинские буквы: от a до z</string>
     <string name="only_numbers09">Цифры от 0 до 9</string>
     <string name="only_symbols">Символы: -_</string>
+    <string name="mango_test">Mango Test</string>
+    <string name="logout">Logout</string>
+    <string name="share">Share</string>
 </resources>

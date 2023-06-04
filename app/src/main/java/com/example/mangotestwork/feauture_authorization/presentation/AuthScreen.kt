@@ -1,9 +1,9 @@
 package com.example.mangotestwork.feauture_authorization.presentation
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -25,7 +25,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -39,6 +38,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mangotestwork.R
+import com.example.mangotestwork.core.presentation.Screens
 import com.togitech.ccp.component.TogiCountryCodePicker
 import com.togitech.ccp.component.getFullPhoneNumber
 import com.togitech.ccp.component.isPhoneNumber
@@ -58,16 +58,15 @@ fun AuthScreen(
 
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.inversePrimary),
+            .fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(stringResource(id = R.string.auth), style = MaterialTheme.typography.titleLarge)
         //Not work with preview
+        //Need another library for country code
         TogiCountryCodePicker(
             shape = RoundedCornerShape(0.dp),
-            color = MaterialTheme.colorScheme.inversePrimary,
             text = phoneState.value,
             onValueChange = { phoneState.value = it },
             bottomStyle = false
@@ -113,8 +112,8 @@ fun AuthScreen(
                 }
             },
             modifier = Modifier
-                .align(Alignment.End)
-                .padding(end = 16.dp)
+                .fillMaxWidth().height(60.dp).padding(start = 16.dp, end = 16.dp),
+            shape = MaterialTheme.shapes.small
         ) {
             Text(
                 if (authState == AuthState.CodeSent) stringResource(id = R.string.enter) else stringResource(
@@ -131,15 +130,17 @@ fun AuthScreen(
 
             is AuthState.Authenticated -> {
                 LaunchedEffect(key1 = Unit) {
+                    val sharedPreferences: SharedPreferences = context.getSharedPreferences("startRoute", Context.MODE_PRIVATE)
+                    sharedPreferences.edit().putString("route", Screens.Profile.route).apply()
                     navigateToProfile()
                 }
             }
 
             is AuthState.Error -> {
-                LaunchedEffect(key1 = (authState as AuthState.Error).message) {
+                LaunchedEffect(key1 = authState.message) {
                     Toast.makeText(
                         context,
-                        (authState as AuthState.Error).message,
+                        authState.message,
                         Toast.LENGTH_SHORT
                     ).show()
                 }

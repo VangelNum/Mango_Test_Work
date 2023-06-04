@@ -2,6 +2,7 @@ package com.example.mangotestwork.feature_edit_profile.presentation
 
 import android.content.Context
 import android.net.Uri
+import android.os.Build
 import android.provider.MediaStore
 import android.util.Base64
 import android.widget.Toast
@@ -9,12 +10,12 @@ import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -24,20 +25,16 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.DateRangePicker
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.rememberDatePickerState
-import androidx.compose.material3.rememberDateRangePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -59,9 +56,14 @@ import com.example.mangotestwork.feature_edit_profile.data.model.UpdateProfileRe
 import com.example.mangotestwork.feature_profile.data.model.ProfileResponse
 import com.example.mangotestwork.feature_profile.data.model.UserProfileResponse
 import com.example.mangotestwork.feature_profile.presentation.ProfileState
+import com.maxkeppeker.sheets.core.models.base.rememberSheetState
+import com.maxkeppeler.sheets.calendar.CalendarDialog
+import com.maxkeppeler.sheets.calendar.models.CalendarConfig
+import com.maxkeppeler.sheets.calendar.models.CalendarSelection
 import java.io.File
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EditProfileScreen(
@@ -102,7 +104,9 @@ fun EditProfileScreen(
 
     if (profileState is ProfileState.Success) {
         val userProfile = profileState.userProfile.profileData
-        val (birthday, setBirthday) = remember { mutableStateOf(userProfile.birthday) }
+        val birthday = remember {
+            mutableStateOf(userProfile.birthday)
+        }
         val (city, setCity) = remember { mutableStateOf(userProfile.city) }
         val (vk, setVk) = remember { mutableStateOf(userProfile.vk) }
         val (instagram, setInstagram) = remember { mutableStateOf(userProfile.instagram) }
@@ -174,12 +178,30 @@ fun EditProfileScreen(
             userProfile.name?.let { Text(text = "Name: $it") }
             userProfile.username?.let { Text(text = "UserName: $it") }
 
+            val calenderState = rememberSheetState()
+            CalendarDialog(config = CalendarConfig(
+                monthSelection = true,
+                yearSelection = true,
+            ), state = calenderState, selection = CalendarSelection.Date { date ->
+                birthday.value = date.toString()
+            })
+
             OutlinedTextField(
-                value = birthday ?: "01-01-2000",
-                onValueChange = setBirthday,
-                modifier = Modifier.fillMaxWidth(),
+                value = birthday.value ?: "2000-01-01",
+                onValueChange = {
+                    birthday.value = it
+                },
+                modifier = Modifier
+                    .fillMaxWidth(),
                 label = { Text(text = "Birthday") },
-                singleLine = true
+                singleLine = true,
+                trailingIcon = {
+                    IconButton(onClick = {
+                        calenderState.show()
+                    }) {
+                        Icon(Icons.Default.DateRange, contentDescription = null)
+                    }
+                }
             )
             OutlinedTextField(
                 value = city ?: "Moscow",
@@ -221,7 +243,7 @@ fun EditProfileScreen(
                             UpdateProfileRequest(
                                 name = userProfile.name,
                                 username = userProfile.username,
-                                birthday = birthday,
+                                birthday = birthday.value,
                                 city = city,
                                 vk = vk,
                                 instagram = instagram,
@@ -237,7 +259,7 @@ fun EditProfileScreen(
                             UpdateProfileRequest(
                                 name = userProfile.name,
                                 username = userProfile.username,
-                                birthday = birthday,
+                                birthday = birthday.value,
                                 city = city,
                                 vk = vk,
                                 instagram = instagram,
@@ -275,6 +297,8 @@ fun pickMedia(
     }
 }
 
+
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun PreviewEditProfile() {

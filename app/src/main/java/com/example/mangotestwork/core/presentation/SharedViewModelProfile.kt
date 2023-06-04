@@ -1,6 +1,5 @@
 package com.example.mangotestwork.core.presentation
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mangotestwork.feature_cache_profile.domain.repository.CacheProfileRepository
@@ -91,6 +90,10 @@ class SharedViewModelProfile @Inject constructor(
         }
     }
 
-
+    fun deleteProfile() {
+        viewModelScope.launch {
+            cacheProfileRepository.deleteCacheProfileData()
+        }
+    }
 }
 

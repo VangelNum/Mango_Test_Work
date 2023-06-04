@@ -107,10 +107,11 @@ dependencies {
     annotationProcessor("androidx.room:room-compiler:$room_version")
     kapt("androidx.room:room-compiler:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
-//    implementation ("androidx.room:room-runtime:2.5.1")
-//    implementation ("androidx.room:room-ktx:2.5.1")
-//    implementation ("androidx.compose.runtime:runtime-livedata:$compose_version")
-//    annotationProcessor ("androidx.room:room-compiler:2.5.1")
-//    kapt ("androidx.room:room-compiler:2.5.1")
 
+    //calendar
+    implementation ("com.maxkeppeler.sheets-compose-dialogs:calendar:1.0.2")
+
+
+    //statusbar
+    implementation ("com.google.accompanist:accompanist-systemuicontroller:0.30.0")
 }
